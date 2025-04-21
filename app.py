@@ -1,7 +1,7 @@
-from flask import Flask, url_for
-
+from flask import Flask, url_for 
+from flask import  render_template
 import sqlite3
-
+ 
 
 app = Flask(__name__)
 db = None
@@ -22,7 +22,7 @@ def cerrarConexion():
     db.close()
     db = None
 @app.route("/agregar-usuario/")
-def testCrear();
+def testCrear():
     nombre = ""
     email = ""
     abrirConexion()
@@ -74,4 +74,21 @@ def dado(caras):
     from random import randint
     n = randint(1,caras)
     return f"<p>tire un dado de {caras} caras ,salio {n}</p>"
+
+
+
+@app.route("/mostrar-datos-plantilla/<int:id>")
+def datos_plantilla(id):
+    abrirConexion()
+    cursor = db.cursor()
+    cursor.execute("SELECT id, usuario, email FROM usuarios WHERE id = ? ;",(id,))
+    res = cursor.fetchone()
+    cerrarConexion()
+    usuario = None 
+    email = None
+    if res != None:
+        usuario=res['usuario']
+        email=res['email']
+    return render_template("datos.html" , id=id , usuario=usuario , email=email)    
+
 

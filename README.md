@@ -9,7 +9,7 @@ python -m venv .venv
 para activar el entorno virtual
 
 ```
-source .venv/vin/activate
+source .venv/bin/activate
 ```
 
 para instalar la dependencia
